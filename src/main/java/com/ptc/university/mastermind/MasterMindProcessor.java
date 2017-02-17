@@ -65,8 +65,28 @@ public class MasterMindProcessor
         return true;
     }
 
-    public boolean process(String inputCodes) {
-        return (new String(this.secretKey).equalsIgnoreCase(inputCodes));
+    public String process(String inputCodes) {
+        String secretCode = new String(this.secretKey);
+        int blackCount = 0;
+        int whiteCount = 0;
+        String response = "";
+
+        char[] charArray = inputCodes.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            int indexOfChar = secretCode.indexOf(charArray[i]);
+            if (indexOfChar == -1){
+                //do nothing
+            }
+            else if (indexOfChar==i){
+                blackCount++;
+            }
+            else{
+                whiteCount++;
+            }
+        }
+        response = response + StringUtils.repeat("B", blackCount);
+        response = response + StringUtils.repeat("W", whiteCount);
+        return response;
     }
 
 }
