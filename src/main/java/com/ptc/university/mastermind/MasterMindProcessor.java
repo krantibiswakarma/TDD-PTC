@@ -3,6 +3,7 @@ package com.ptc.university.mastermind;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class MasterMindProcessor
@@ -34,7 +35,7 @@ public class MasterMindProcessor
         }else if(SECRET_KEY_LENGTH != key.length()) {
             VALIDATION_ERROR = INVALID_KEY_LENGTH;
             return false;
-        } else if (!(checkForUnique(key))){
+        } else if (!(checkUnique(key))){
             VALIDATION_ERROR = REPEATED_KEY;
             return false;
         } else if(!containAllowedColors(key)){
@@ -44,16 +45,15 @@ public class MasterMindProcessor
         return true;
     }
 
-    private boolean checkForUnique(String str){
-        boolean containsUnique = false;
+    public boolean checkUnique(String str){
+
+        HashSet hashSet = new HashSet(str.length());
+
         for(char c : str.toCharArray()){
-            if(str.indexOf(c) == str.lastIndexOf(c)){
-                containsUnique = true;
-            } else {
-                containsUnique = false;
-            }
+            if(!hashSet.add(Character.toUpperCase(c)))
+                return false;
         }
-    return containsUnique;
+        return true;
     }
 
     private boolean containAllowedColors(String key){
@@ -66,7 +66,7 @@ public class MasterMindProcessor
     }
 
     public boolean process(String inputCodes) {
-        return false;
+        return (new String(this.secretKey).equalsIgnoreCase(inputCodes));
     }
 
 }

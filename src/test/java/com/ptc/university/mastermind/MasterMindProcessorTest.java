@@ -24,7 +24,7 @@ public class MasterMindProcessorTest {
 
 	@Test
 	public void storeRepeatedSecretKey() {
-		Assert.assertEquals(masterMindProcessor.REPEATED_KEY, masterMindProcessor.storeKey("RGYR"));
+		Assert.assertEquals(masterMindProcessor.REPEATED_KEY, masterMindProcessor.storeKey("RRGB"));
 	}
 
 	@Test

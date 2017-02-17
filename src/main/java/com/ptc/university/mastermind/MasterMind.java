@@ -11,16 +11,21 @@ public class MasterMind {
 
 
         System.out.println("Enter the Secret Color codes :");
-        processor.storeKey(scanner.next());
+        String storeText = processor.storeKey(scanner.next());
+
+        while(!processor.SUCCESSFULLY_STORED.equals(storeText)){
+            System.out.println(storeText +". ReEnter the code :");
+            storeText = processor.storeKey(scanner.next());
+        }
 
         String input;
-        int attempt = 0;
+        int attempt = 1;
 
         System.out.println("Enter Colors in position order :");
         input = scanner.next();
 
         while(!play(input, processor, attempt)){
-
+            System.out.println("Attempt :" + attempt);
             if(isMaxAttempt(attempt)) {
                 System.out.println("You have exceeded the maximum number of attempts.");
                 break;
