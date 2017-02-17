@@ -1,5 +1,6 @@
 package com.ptc.university.mastermind;
 
+import com.sun.deploy.security.ruleset.Rule;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
@@ -65,17 +66,27 @@ public class MasterMindProcessor
         return true;
     }
 
+    private String getSecretKey(){
+        return new String(this.secretKey);
+    }
     public String process(String inputCodes) {
-        String secretCode = new String(this.secretKey);
+
+        String rulesValidation = validateWithRules(inputCodes);
+
+        if(!Rules.VALID.equals(rulesValidation)) {
+            return rulesValidation;
+        }
+
+        String secretCode = getSecretKey();
+
         int blackCount = 0;
         int whiteCount = 0;
-        String response = "";
+        String output = "";
 
         char[] charArray = inputCodes.toCharArray();
         for (int i = 0; i < charArray.length; i++) {
             int indexOfChar = secretCode.indexOf(charArray[i]);
             if (indexOfChar == -1){
-                //do nothing
             }
             else if (indexOfChar==i){
                 blackCount++;
@@ -84,9 +95,23 @@ public class MasterMindProcessor
                 whiteCount++;
             }
         }
-        response = response + StringUtils.repeat("B", blackCount);
-        response = response + StringUtils.repeat("W", whiteCount);
-        return response;
+        output = output + StringUtils.repeat("B", blackCount);
+        output = output + StringUtils.repeat("W", whiteCount);
+
+        updateRulesMap(inputCodes, output);
+        return output;
+    }
+
+    private String validateWithRules(String input) {
+        if(Rules.RESULTS_MAP.containsKey(input)) {
+            return Rules.REPEAT;
+        }
+
+        return Rules.VALID;
+    }
+
+    private void updateRulesMap(String inputCodes, String output) {
+        Rules.RESULTS_MAP.put(inputCodes, output);
     }
 
 }

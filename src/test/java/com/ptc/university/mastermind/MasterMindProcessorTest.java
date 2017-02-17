@@ -85,4 +85,11 @@ public class MasterMindProcessorTest {
 		Assert.assertEquals("WW", masterMindProcessor.process("BRPV"));
 	}
 
+	@Test
+	public void processInput9() {
+		masterMindProcessor.storeKey("RBYG");
+		Assert.assertEquals("WW", masterMindProcessor.process("BRPV"));
+		Assert.assertEquals(Rules.REPEAT, masterMindProcessor.process("BRPV"));
+	}
+
 }
