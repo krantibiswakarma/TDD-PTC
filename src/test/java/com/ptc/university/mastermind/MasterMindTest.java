@@ -5,36 +5,17 @@ import org.junit.Test;
 
 public class MasterMindTest {
 
-	MasterMind masterMind = new MasterMind();
+    MasterMindProcessor processor = new MasterMindProcessor();
 
-	@Test
-	public void storeSecretKey() {
-		Assert.assertEquals(masterMind.SUCCESSFULLY_STORED,masterMind.storeKey("RGYV"));
-	}
+    @Test
+    public void mastermindTest1() {
+        processor.storeKey("RGVB");
+        Assert.assertFalse(MasterMind.play("AAAA",processor, 0));
+    }
 
-	@Test
-	public void storeLessSecretKeyLength() {
-		Assert.assertEquals(masterMind.INVALID_KEY_LENGTH,masterMind.storeKey("RGY"));
-	}
-
-	@Test
-	public void storeMoreSecretKeyLength() {
-		Assert.assertEquals(masterMind.INVALID_KEY_LENGTH,masterMind.storeKey("RGYVP"));
-	}
-
-	@Test
-	public void storeRepeatedSecretKey() {
-		Assert.assertEquals(masterMind.REPEATED_KEY,masterMind.storeKey("RGYR"));
-	}
-
-	@Test
-	public void storeInvalidSecretKey() {
-		Assert.assertEquals(masterMind.INVALID_COLORS,masterMind.storeKey("RGYZ"));
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void storeSecretKeyException() {
-		masterMind.storeKey("");
-	}
-
+    @Test
+    public void mastermindTest2() {
+        processor.storeKey("RGVB");
+        Assert.assertTrue(MasterMind.play("RGVB",processor, 1));
+    }
 }
