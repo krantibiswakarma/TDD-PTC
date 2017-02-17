@@ -10,12 +10,20 @@ public class MasterMindTest {
     @Test
     public void mastermindTest1() {
         processor.storeKey("RGVB");
-        Assert.assertFalse(MasterMind.play("AAAA",processor, 0));
+        Assert.assertFalse(MasterMind.play("AAAA",processor, new PassMeByRef()));
     }
 
     @Test
     public void mastermindTest2() {
         processor.storeKey("RGVB");
-        Assert.assertTrue(MasterMind.play("RGVB",processor, 1));
+        Assert.assertTrue(MasterMind.play("RGVB",processor, new PassMeByRef()));
+    }
+
+    @Test
+    public void mastermindTest3() {
+        processor.storeKey("RGVB");
+        PassMeByRef ref = new PassMeByRef();
+        ref.theValue = 6;
+        Assert.assertFalse(MasterMind.play("RGVB",processor, ref));
     }
 }
